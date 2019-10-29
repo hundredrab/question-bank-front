@@ -10,15 +10,19 @@ var app = new Vue({
       this.populateRes()
     }
   },
+  mounted(){
+  },
   methods: {
     populateRes: _.debounce(function(){
       var app = this
       app.status = "Searching..."
-      let data = new FormData();
-      data.append("file", app.text)
-
       axios.get(
-          "http://127.0.0.1:8000/question/", data,
+          "http://127.0.0.1:8000/question/", {
+              params: {
+                  text: app.text,
+                  tag: 2,
+              }
+          }
       ).then(function (response) {
         console.log(response.data)
         app.questions = response.data
